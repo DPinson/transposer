@@ -1,51 +1,71 @@
-"""Auteur: Denis Pinson
-   Date : 28/11/2019
-   But du programme : transposer un texte en décalant les lettres, consonne vers consonne et voyelle vers voyelle 
-   Entrée: le texte à modifier (exemple : Hello World)
-   Sorties: le texte donc les lettres ont été décalées (exemple : Konny Zytng)
+"""Author: Denis Pinson
+   Date : 16/05/2020
+   Goal : to change a text letter by letter, consonant to consonant and voyel to voyel, in a different order
+   you can choose between 3 languages
+   in: the text you want to change (exemple : Hello World)
+   out: the new changed text (exemple : Byffe Qelfw)
 """
-import tkinter
+import tkinter as tk
+import transposerLanguage as tL
 
-FRANCAIS = 0
-ANGLAIS = 1
-ARABE = 2
+# Language constants to choose starting language and which changes to make
+FRANCAIS = 1
+ENGLISH = 0
+ARABIAN = 2
 
-app = tkinter.Tk()
-app.geometry("500x500")
-app.title("Transposer un texte")
-
-def updateLabel(*args):
-    message = texteBase.get()
-    nouveauTexte = ""
-    for i in range(len(message)) : 
-        nouveauTexte += transposerAnglais(message[i])
+def changeText(*args):
+    """ 
+    This function return the new text
+    """
+    message = base_text.get()
+    new_text = ""
+    lang = var_lang.get()
+    for i in range(len(message)): 
+        if lang == ENGLISH:
+            new_text += tL.transposerEnglish(message[i])
+        elif lang == FRANCAIS: 
+            new_text += tL.transposerFrancais(message[i])
+        else:
+            new_text += tL.transposerArabian(message[i])
         i =+ 1
-    varTexteNouveau.set(nouveauTexte)
+    var_new_text.set(new_text)
 
-def defineLang(*args) :
-    #varLang.set()
-    pass
 
-def transposerAnglais(lettre) : 
-    voyelle = ["a", "e", "i", "o", "u", "y"]
-    consonne = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z"]
-    if lettre in voyelle :
-        nouvellelettre = voyelle.index(lettre) + 2
-        return voyelle[nouvellelettre]
-    elif lettre in consonne : 
-        nouvellelettre = consonne.index(lettre) + 2
-        return consonne[nouvellelettre]
-    else :
-        return lettre
+transposer = tk.Tk()
+transposer.wm_state('zoomed') # for full screen
+transposer.configure(bg="lightgreen")
+transposer.positionfrom("user")
+transposer.title("Transposer un texte")
 
-varTexteBase = tkinter.StringVar()
-varTexteBase.trace("w", updateLabel)
-texteBase = tkinter.Entry(app, textvariable = varTexteBase)
+page = tk.LabelFrame(transposer, border=0, background="lightgreen", text="Appli pour transposer du texte")
 
-varTexteNouveau = tkinter.StringVar()
-texteNouveau = tkinter.Entry(app, textvariable = varTexteNouveau)
+choose_lang = tk.LabelFrame(page, width=20, background="lightgreen", text="Choisissez votre langue de départ")
+place_holder = tk.Frame(page, width=780, height=100, background="lightgreen")
 
-texteBase.pack()
-texteNouveau.pack()
+var_lang = tk.IntVar()
+radioEnglish = tk.Radiobutton(choose_lang, text="Anglais", value=ENGLISH, variable=var_lang, background="lightgreen", width="10")
+radioFrancais = tk.Radiobutton(choose_lang, text="Français", value=FRANCAIS, variable=var_lang, background="lightgreen", width="10")
+radioArabian = tk.Radiobutton(choose_lang, text="Arabe", value=ARABIAN, variable=var_lang, background="lightgreen", width="10")
 
-app.mainloop()
+entries = tk.LabelFrame(page, background="lightgreen", text="Entrer un texte à transcoder")
+var_base_text = tk.StringVar() 
+var_base_text.trace("w", changeText)
+base_text = tk.Entry(entries, textvariable = var_base_text)
+
+outsees = tk.LabelFrame(page, background="lightgreen", text="Voici le texte modifié")
+var_new_text = tk.StringVar()
+new_text = tk.Entry(outsees, textvariable = var_new_text)
+
+page.pack(fill=tk.BOTH)
+
+outsees.pack(fill=tk.X, side="bottom")
+new_text.pack(fill=tk.X)
+entries.pack(fill=tk.X, side="bottom")
+base_text.pack(fill=tk.X)
+choose_lang.pack(side="left")
+radioArabian.pack()
+radioFrancais.pack()
+radioEnglish.pack()
+place_holder.pack(fill=tk.X, side="left")
+
+transposer.mainloop()
