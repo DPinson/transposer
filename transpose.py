@@ -13,6 +13,12 @@ FRANCAIS = 1
 ENGLISH = 0
 ARABIAN = 2
 
+class Transpose():
+    """A class to sort out the widgets
+    
+    """ 
+    pass
+
 def changeText(*args):
     """ 
     This function return the new text
@@ -40,7 +46,6 @@ transposer.title("Transposer un texte")
 page = tk.LabelFrame(transposer, border=0, background="lightgreen", text="Appli pour transposer du texte")
 
 choose_lang = tk.LabelFrame(page, width=20, background="lightgreen", text="Choisissez votre langue de départ")
-place_holder = tk.Frame(page, width=780, height=100, background="lightgreen")
 
 var_lang = tk.IntVar()
 radioEnglish = tk.Radiobutton(choose_lang, text="Anglais", value=ENGLISH, variable=var_lang, background="lightgreen", width="10")
@@ -66,6 +71,5 @@ choose_lang.pack(side="left")
 radioArabian.pack()
 radioFrancais.pack()
 radioEnglish.pack()
-place_holder.pack(fill=tk.X, side="left")
 
 transposer.mainloop()
