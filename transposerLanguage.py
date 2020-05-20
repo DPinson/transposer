@@ -1,11 +1,12 @@
 def transposerEnglish(letter):
     """ Function to switch letters from "English" language
     Keep the change of indices negative to avoid the need to add letters   """
+    #define the different strings of letters
     voyel = "aeiouy"
     voyel_capital = str.upper(voyel)
     consonant = "bcdfghjklmnpqrstvwxz"
     consonant_capital = str.upper(consonant)
-
+    #define hox to change the letters
     if letter in voyel:
         new_letter = voyel.index(letter) - 2
         return voyel[new_letter]
@@ -22,8 +23,9 @@ def transposerEnglish(letter):
         return letter
 
 def transposerArabian(letter):
-    """ Function to switch letters from "Arabian" language
+    """ Function to switch letters from "Arabian" language. I used the classical arabian system.
     Keep the change of indices negative to avoid the need to add letters   """
+    #a bit more work to do on this one, like adding consonants and making sure not to forget any letter 
     lunar = "بجحخعغقفكمهويء"
     solar = "تثدذرزسشصضطظنل"
 
@@ -44,7 +46,7 @@ def transposerFrancais(letter):
     voyel_accent = "éàèùâêîôûëïüÿœæ"
     accent_capital = str.upper(voyel_accent)
     consonant = "bcdfghjklmnpqrstvwxz" 
-    cedille_tilde = "çÇñÑ"
+    cedille_tilde = "çÇñÑ" #I know, there is no tilde in french, but what would you have used instead on an azerty keyboard ?
     consonant_capital = str.upper(consonant)
   
     if letter in voyel:
