@@ -14,27 +14,25 @@ ENGLISH = 0
 ARABIAN = 2
 
 class Transpose():
-    """A class to sort out the widgets
-    
+    """Where you can find the function to change the text to the new version
     """ 
-    pass
 
-def changeText(*args):
-    """ 
-    This function return the new text
-    """
-    message = base_text.get()
-    new_text = ""
-    lang = var_lang.get()
-    for i in range(len(message)): 
-        if lang == ENGLISH:
-            new_text += tL.transposerEnglish(message[i])
-        elif lang == FRANCAIS: 
-            new_text += tL.transposerFrancais(message[i])
-        else:
-            new_text += tL.transposerArabian(message[i])
-        i =+ 1
-    var_new_text.set(new_text)
+    def changeText(self, *args):
+        """ 
+        This function return the new text
+        """
+        message = base_text.get()
+        new_text = ""
+        lang = var_lang.get()
+        for i in range(len(message)): 
+            if lang == ENGLISH:
+                new_text += tL.transposerEnglish(message[i])
+            elif lang == FRANCAIS: 
+                new_text += tL.transposerFrancais(message[i])
+            else:
+                new_text += tL.transposerArabian(message[i])
+            i =+ 1
+        var_new_text.set(new_text)
 
 
 transposer = tk.Tk()
@@ -42,6 +40,7 @@ transposer.wm_state('zoomed') # for full screen
 transposer.configure(bg="lightgreen")
 transposer.positionfrom("user")
 transposer.title("Transposer un texte")
+
 
 page = tk.LabelFrame(transposer, border=0, background="lightgreen", text="Appli pour transposer du texte")
 
@@ -54,7 +53,7 @@ radioArabian = tk.Radiobutton(choose_lang, text="Arabe", value=ARABIAN, variable
 
 entries = tk.LabelFrame(page, background="lightgreen", text="Entrer un texte à transcoder")
 var_base_text = tk.StringVar() 
-var_base_text.trace("w", changeText)
+var_base_text.trace("w", Transpose.changeText)
 base_text = tk.Entry(entries, textvariable = var_base_text)
 
 outsees = tk.LabelFrame(page, background="lightgreen", text="Voici le texte modifié")
